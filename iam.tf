@@ -1,6 +1,6 @@
 locals {
   bucket_permissions_list = flatten(
-    [for bucket in toset(data.data.aws_s3_bucket.kb_bucket_data_source) : [bucket.arn, "${bucket.arn}/*"]]
+    [for bucket in data.aws_s3_bucket.kb_bucket_data_source : [bucket.arn, "${bucket.arn}/*"]]
   )
 }
 

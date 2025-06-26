@@ -1,5 +1,5 @@
 resource "aws_bedrockagent_knowledge_base" "kb" {
-  for_each = toset(var.kb_config)
+  for_each = local.kb_map
   name     = each.value.kb_name
   role_arn = aws_iam_role.bedrock_kb_role.arn
   knowledge_base_configuration {
@@ -17,7 +17,7 @@ resource "aws_bedrockagent_knowledge_base" "kb" {
   storage_configuration {
     type = "RDS"
     rds_configuration {
-      credentials_secret_arn = aws_secretsmanager_secret.bedrock_user.arn
+      credentials_secret_arn = aws_secretsmanager_secret.rds_bedrock_secret.arn
       database_name          = each.value.kb_name
       table_name             = "bedrock_integration.bedrock_kb"
       resource_arn           = aws_rds_cluster.aurora_serverless.arn
@@ -39,16 +39,16 @@ resource "aws_bedrockagent_knowledge_base" "kb" {
 }
 
 resource "aws_bedrockagent_data_source" "kb_data_source" {
-  for_each             = toset(var.kb_config)
-  knowledge_base_id    = aws_bedrockagent_knowledge_base.kb[each.value].id // to check
+  for_each             = local.kb_map
+  knowledge_base_id    = aws_bedrockagent_knowledge_base.kb[each.key].id
   name                 = "${each.value.kb_name}-data-source"
   data_deletion_policy = "RETAIN"
 
   data_source_configuration {
     type = "S3"
     s3_configuration {
-      bucket_arn         = data.aws_s3_bucket.kb_bucket_data_source[each.value].arn // to check
-      inclusion_prefixes = each.value.source_bucket_prefixes                        // to check
+      bucket_arn         = data.aws_s3_bucket.kb_bucket_data_source[each.key].arn
+      inclusion_prefixes = each.value.source_bucket_prefixes
     }
   }
 

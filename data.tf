@@ -3,6 +3,6 @@ data "aws_bedrock_foundation_model" "embedding" {
 }
 
 data "aws_s3_bucket" "kb_bucket_data_source" {
-  for_each = toset(var.kb_config)
+  for_each = local.kb_map
   bucket   = each.value.source_bucket_name
 }

@@ -24,7 +24,6 @@ variable "rds_config" {
   type = object({
     vpc_id                   = string
     subnet_ids               = list(string)
-    sg_ids                   = list(string)
     master_username          = optional(string, "db_user")
     max_capacity             = optional(number, 1.0)
     min_capacity             = optional(number, 0.0)

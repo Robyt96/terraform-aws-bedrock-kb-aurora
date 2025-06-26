@@ -14,11 +14,10 @@ resource "aws_rds_cluster" "aurora_serverless" {
   engine_version             = "16.4"
   engine_mode                = "provisioned"
   master_username            = var.rds_config.master_username
-  master_password_wo         = local.rds_secret["password"]
+  master_password_wo         = local.rds_admin_secret["password"]
   master_password_wo_version = local.admin_pwd_version
   database_name              = "default_db"
   db_subnet_group_name       = aws_db_subnet_group.aurora_subnet_group.name
-  vpc_security_group_ids     = [aws_security_group.aurora_sg.id]
   skip_final_snapshot        = true
   enable_http_endpoint       = true
 
@@ -47,7 +46,7 @@ resource "aws_rds_cluster_instance" "aurora_instance" {
 }
 
 resource "null_resource" "execute_sql_commands" {
-  for_each = toset(var.kb_config)
+  for_each = local.kb_map
   triggers = {
     cluster_arn = aws_rds_cluster.aurora_serverless.arn
   }
