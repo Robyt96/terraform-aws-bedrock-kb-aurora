@@ -1,0 +1,1 @@
+# AWS Bedrock Knowledge Bases with Aurora Serverless module

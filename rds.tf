@@ -91,7 +91,7 @@ resource "null_resource" "execute_sql_commands" {
         --secret-arn ${aws_secretsmanager_secret.rds_admin_secret.arn} \
         --database ${each.value.kb_name} \
         --region ${var.aws_region} \
-        --sql "CREATE ROLE bedrock_user WITH PASSWORD 'password' LOGIN;"
+        --sql "CREATE ROLE bedrock_user WITH PASSWORD '${local.rds_bedrock_secret.password}' LOGIN;"
 
       aws rds-data execute-statement \
         --resource-arn ${aws_rds_cluster.aurora_serverless.arn} \
