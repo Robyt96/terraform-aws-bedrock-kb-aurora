@@ -1,4 +1,7 @@
 # AWS Bedrock Knowledge Bases with Aurora Serverless module
+
+Terraform module, which creates one or more Bedrock Knowledge Bases with S3 Bucket as data source and RDS Aurora Serverless as Vector Store. With default RDS configuration values, the Aurora cluster scales down to 0 ACU (minimum capacity) after 15 minutes without connections to the DB. This is useful to development enviroments where you want to test Bedrock Knowledge Bases with minimum spending.
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
