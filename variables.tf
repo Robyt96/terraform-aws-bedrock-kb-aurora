@@ -1,9 +1,11 @@
 variable "resource_name_prefix" {
-  type = string
+  type        = string
+  description = "Name prefix of created resources"
 }
 
 variable "aws_region" {
-  type = string
+  type        = string
+  description = "AWS region"
 }
 
 variable "kb_config" {
@@ -18,6 +20,8 @@ variable "kb_config" {
     ])
     error_message = "Valid characters for kb_name are a-z, A-Z, 0-9, _ (underscore) and - (hyphen). The name can have up to 50 characters."
   }
+
+  description = "List of objects representing a Bedrock Knowledge Base configuration"
 }
 
 variable "rds_config" {
@@ -29,6 +33,8 @@ variable "rds_config" {
     min_capacity             = optional(number, 0.0)
     seconds_until_auto_pause = optional(number, 900)
   })
+
+  description = "Configuration of RDS Aurora Serverless for Vector Store"
 }
 
 variable "embedding_config" {
@@ -40,9 +46,13 @@ variable "embedding_config" {
     model_id   = "amazon.titan-embed-text-v2:0"
     dimensions = 1024
   }
+
+  description = "Configuration of the embedding foundation model to use"
 }
 
 variable "tags" {
   type    = map(string)
   default = {}
+
+  description = "Tags to apply to AWS resources"
 }
