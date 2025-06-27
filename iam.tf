@@ -61,7 +61,7 @@ resource "aws_iam_policy" "bedrock_kb_policy" {
           "s3:GetObject"
         ],
         Effect   = "Allow",
-        Resource = local.bucket_permissions_list
+        Resource = tolist(toset(local.bucket_permissions_list))
       }
     ]
   })

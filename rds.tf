@@ -105,7 +105,7 @@ resource "null_resource" "execute_sql_commands" {
         --secret-arn ${aws_secretsmanager_secret.rds_admin_secret.arn} \
         --database ${each.value.kb_name} \
         --region ${var.aws_region} \
-        --sql "CREATE TABLE bedrock_integration.bedrock_kb (id uuid PRIMARY KEY, embedding vector(1024), chunks text, metadata jsonb);"
+        --sql "CREATE TABLE bedrock_integration.bedrock_kb (id uuid PRIMARY KEY, embedding vector(${var.embedding_config.dimensions}), chunks text, metadata jsonb);"
 
       aws rds-data execute-statement \
         --resource-arn ${aws_rds_cluster.aurora_serverless.arn} \
