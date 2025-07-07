@@ -11,7 +11,7 @@ resource "aws_db_subnet_group" "aurora_subnet_group" {
 resource "aws_rds_cluster" "aurora_serverless" {
   cluster_identifier         = local.cluster_name
   engine                     = "aurora-postgresql"
-  engine_version             = "16.4"
+  engine_version             = var.rds_config.engine_version
   engine_mode                = "provisioned"
   master_username            = var.rds_config.master_username
   master_password_wo         = local.rds_admin_secret["password"]
@@ -33,12 +33,13 @@ resource "aws_rds_cluster" "aurora_serverless" {
 }
 
 resource "aws_rds_cluster_instance" "aurora_instance" {
-  cluster_identifier  = aws_rds_cluster.aurora_serverless.id
-  identifier          = local.db_instance_name
-  instance_class      = "db.serverless"
-  engine              = aws_rds_cluster.aurora_serverless.engine
-  engine_version      = aws_rds_cluster.aurora_serverless.engine_version
-  publicly_accessible = false
+  cluster_identifier         = aws_rds_cluster.aurora_serverless.id
+  identifier                 = local.db_instance_name
+  instance_class             = "db.serverless"
+  engine                     = aws_rds_cluster.aurora_serverless.engine
+  engine_version             = aws_rds_cluster.aurora_serverless.engine_version
+  publicly_accessible        = false
+  auto_minor_version_upgrade = var.rds_config.auto_minor_version_upgrade
 
   tags = merge(var.tags, {
     Name = local.db_instance_name

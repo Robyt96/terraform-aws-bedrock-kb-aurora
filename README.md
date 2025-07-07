@@ -47,9 +47,9 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS region | `string` | n/a | yes |
-| <a name="input_embedding_config"></a> [embedding\_config](#input\_embedding\_config) | Configuration of the embedding foundation model to use | <pre>object({<br>    model_id   = string<br>    dimensions = number<br>  })</pre> | <pre>{<br>  "dimensions": 1024,<br>  "model_id": "amazon.titan-embed-text-v2:0"<br>}</pre> | no |
-| <a name="input_kb_config"></a> [kb\_config](#input\_kb\_config) | List of objects representing a Bedrock Knowledge Base configuration | <pre>list(object({<br>    kb_name                = string<br>    source_bucket_name     = string<br>    source_bucket_prefixes = optional(list(string))<br>  }))</pre> | n/a | yes |
-| <a name="input_rds_config"></a> [rds\_config](#input\_rds\_config) | Configuration of RDS Aurora Serverless for Vector Store | <pre>object({<br>    vpc_id                   = string<br>    subnet_ids               = list(string)<br>    master_username          = optional(string, "db_user")<br>    max_capacity             = optional(number, 1.0)<br>    min_capacity             = optional(number, 0.0)<br>    seconds_until_auto_pause = optional(number, 900)<br>  })</pre> | n/a | yes |
+| <a name="input_embedding_config"></a> [embedding\_config](#input\_embedding\_config) | Configuration of the embedding foundation model to use | <pre>object({<br/>    model_id   = string<br/>    dimensions = number<br/>  })</pre> | <pre>{<br/>  "dimensions": 1024,<br/>  "model_id": "amazon.titan-embed-text-v2:0"<br/>}</pre> | no |
+| <a name="input_kb_config"></a> [kb\_config](#input\_kb\_config) | List of objects representing a Bedrock Knowledge Base configuration | <pre>list(object({<br/>    kb_name                = string<br/>    source_bucket_name     = string<br/>    source_bucket_prefixes = optional(list(string))<br/>  }))</pre> | n/a | yes |
+| <a name="input_rds_config"></a> [rds\_config](#input\_rds\_config) | Configuration of RDS Aurora Serverless for Vector Store | <pre>object({<br/>    vpc_id                     = string<br/>    subnet_ids                 = list(string)<br/>    master_username            = optional(string, "db_user")<br/>    max_capacity               = optional(number, 1.0)<br/>    min_capacity               = optional(number, 0.0)<br/>    seconds_until_auto_pause   = optional(number, 900)<br/>    engine_version             = optional(string, "16.4")<br/>    auto_minor_version_upgrade = optional(bool, false)<br/>  })</pre> | n/a | yes |
 | <a name="input_resource_name_prefix"></a> [resource\_name\_prefix](#input\_resource\_name\_prefix) | Name prefix of created resources | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to apply to AWS resources | `map(string)` | `{}` | no |
 
@@ -57,5 +57,5 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_knownledge_base_ids"></a> [knownledge\_base\_ids](#output\_knownledge\_base\_ids) | n/a |
+| <a name="output_knownledge_base_ids"></a> [knownledge\_base\_ids](#output\_knownledge\_base\_ids) | Map of knowledge base names to their IDs |
 <!-- END_TF_DOCS -->

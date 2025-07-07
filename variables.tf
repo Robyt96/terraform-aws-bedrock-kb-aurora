@@ -26,12 +26,14 @@ variable "kb_config" {
 
 variable "rds_config" {
   type = object({
-    vpc_id                   = string
-    subnet_ids               = list(string)
-    master_username          = optional(string, "db_user")
-    max_capacity             = optional(number, 1.0)
-    min_capacity             = optional(number, 0.0)
-    seconds_until_auto_pause = optional(number, 900)
+    vpc_id                     = string
+    subnet_ids                 = list(string)
+    master_username            = optional(string, "db_user")
+    max_capacity               = optional(number, 1.0)
+    min_capacity               = optional(number, 0.0)
+    seconds_until_auto_pause   = optional(number, 900)
+    engine_version             = optional(string, "16.4")
+    auto_minor_version_upgrade = optional(bool, false)
   })
 
   description = "Configuration of RDS Aurora Serverless for Vector Store"
